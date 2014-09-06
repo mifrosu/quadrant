@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :row_items
+
   resources :data_sets
 
   # The priority is based upon order of creation: first created -> highest priority.

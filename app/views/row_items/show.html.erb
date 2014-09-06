@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id text:</strong>
+  <%= @row_item.id_text %>
+</p>
+
+<p>
+  <strong>X data:</strong>
+  <%= @row_item.x_data %>
+</p>
+
+<p>
+  <strong>Y data:</strong>
+  <%= @row_item.y_data %>
+</p>
+
+<p>
+  <strong>Radius data:</strong>
+  <%= @row_item.radius_data %>
+</p>
+
+<p>
+  <strong>Data set:</strong>
+  <%= @row_item.data_set %>
+</p>
+
+<%= link_to 'Edit', edit_row_item_path(@row_item) %> |
+<%= link_to 'Back', row_items_path %>
