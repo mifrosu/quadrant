@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @data_set.title %>
+</p>
+
+<p>
+  <strong>Id title:</strong>
+  <%= @data_set.id_title %>
+</p>
+
+<p>
+  <strong>X title:</strong>
+  <%= @data_set.x_title %>
+</p>
+
+<p>
+  <strong>Y title:</strong>
+  <%= @data_set.y_title %>
+</p>
+
+<p>
+  <strong>Radius title:</strong>
+  <%= @data_set.radius_title %>
+</p>
+
+<%= link_to 'Edit', edit_data_set_path(@data_set) %> |
+<%= link_to 'Back', data_sets_path %>
