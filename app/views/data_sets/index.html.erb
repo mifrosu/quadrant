@@ -1,4 +1,4 @@
-<h1>Listing data_sets</h1>
+<h1>Data Sets</h1>
 
 <table>
   <thead>
@@ -30,4 +30,8 @@
 
 <br>
 
-<%= link_to 'New Data set', new_data_set_path %>
+<h2>Import Data</h2>
+<%= form_tag import_data_sets_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Upload CSV" %>
+<% end %>

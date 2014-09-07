@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
-  resources :row_items
+  root "data_sets#index"
 
-  resources :data_sets
+  resources :data_sets do
+    collection do
+      post :import   # import action on DataSetsController
+    end
+  end
+
+  resources :row_items
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
