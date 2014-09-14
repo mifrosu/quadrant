@@ -20,16 +20,17 @@ class DataSetTest < ActiveSupport::TestCase
                                                data_set.radius_title]
   end
 
-  test "A DataSet and its row items can be made by importing a CSV" do
-    file = File.open(@file_path, 'r')
-    data_set = DataSet.import(file)
-    file.close
-    assert_equal 12, data_set.row_items.count
-    assert_equal "Creature", data_set.id_title
-    assert_equal "Adipose", data_set.row_items.first.id_text
-    assert_equal 0.1, data_set.row_items.first.radius_data
-    assert_equal "Zygon", data_set.row_items.last.id_text
-    assert_equal 1.0, data_set.row_items.last.radius_data
+  test "A DataSet and its row items can be created by importing a CSV" do
+    assert_difference 'DataSet.count', 1 do
+      File.open(@file_path, 'r') do |file|
+        DataSet.import(file)
+      end
+    end
+    data = DataSet.where(title: 'basic_test.csv').first
+    assert_equal 12, data.row_items.count
+    assert_equal "Creature", data.id_title
+    test_array = (data.row_items.map(&:id_text) & ['Adipose', 'Zygon'])
+    assert_equal test_array, ['Adipose', 'Zygon']
   end
 
 end
