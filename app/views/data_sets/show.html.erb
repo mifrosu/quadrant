@@ -1,29 +1,27 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></th>
 
-<p>
-  <strong>Title:</strong>
-  <%= @data_set.title %>
-</p>
+<h1> <%= @data_set.title %> </h1>
+<table>
+  <thead>
+    <tr>
+      <th> <%= @data_set.id_title %> </th>
+      <th> <%= @data_set.x_title %> </th>
+      <th> <%= @data_set.y_title %> </th>
+      <th> <%= @data_set.radius_title %> </th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Id title:</strong>
-  <%= @data_set.id_title %>
-</p>
-
-<p>
-  <strong>X title:</strong>
-  <%= @data_set.x_title %>
-</p>
-
-<p>
-  <strong>Y title:</strong>
-  <%= @data_set.y_title %>
-</p>
-
-<p>
-  <strong>Radius title:</strong>
-  <%= @data_set.radius_title %>
-</p>
+  <tbody>
+  <% @data_set.row_items.each do |row| %>
+    <tr>
+      <td> <%= row.id_text %> </td>
+      <td> <%= row.x_data %> </td>
+      <td> <%= row.y_data %> </td>
+      <td> <%= row.radius_data %> </td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
 
 <%= link_to 'Edit', edit_data_set_path(@data_set) %> |
 <%= link_to 'Back', data_sets_path %>
