@@ -15,6 +15,10 @@ class DataSet < ActiveRecord::Base
                     y_title: row[2], radius_title: row[3])
   end
 
+  def chart_data
+    self.row_items.as_json(only: [:id_text, :x_data, :y_data, :radius_data])
+  end
+
   private
 
   def self.make_row_items(data_set, rows)

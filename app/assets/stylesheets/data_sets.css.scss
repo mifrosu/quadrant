@@ -1,3 +1,30 @@
 // Place all the styles related to the DataSets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+body {
+  overflow-y:scroll;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  overflow: hidden;
+}
+
+svg.quadrant_area {
+  height: 500px;
+  width: 1000px;
+}
+
+#quadrant_chart div {
+  border: 0;
+  margin: 0;
+}
+
+#quadrant_chart {
+  margin: 0;
+}
+
+

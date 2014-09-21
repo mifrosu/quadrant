@@ -1,6 +1,9 @@
 <p id="notice"><%= notice %></th>
 
 <h1> <%= @data_set.title %> </h1>
+
+<%= content_tag(:div, content_tag(:svg, "", class: "quadrant_area"), id: "quadrant_chart", data: {items: @data_set.chart_data }) %>
+
 <table>
   <thead>
     <tr>
@@ -25,3 +28,5 @@
 
 <%= link_to 'Edit', edit_data_set_path(@data_set) %> |
 <%= link_to 'Back', data_sets_path %>
+
+<% javascript_include_tag "data_set_chart" %>
