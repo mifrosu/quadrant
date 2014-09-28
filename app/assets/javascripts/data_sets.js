@@ -1,4 +1,4 @@
-// Place all the behaviors and hooks related to the matching controller here.
+// Place all the behaviours and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
 
@@ -18,12 +18,15 @@ nv.addGraph(function() {
 
   chart.xAxis.tickFormat(d3.format('.02f'));
   chart.yAxis.tickFormat(d3.format('.02f'));
-  chart.tooltipContent(function(key) {
-      return '<h2>' + key + '</h2>';
-  });
+  //chart.tooltipContent(function(key) {
+  //    return '<h2>' + key + '</h2>';
+  //});
 
-  d3.select('#quadrant_chart svg')
-      .datum(randomData(4,40))
+  var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
+
+  d3.select('#quadrant_data svg')
+      //.datum(randomData(4,40))
+      .datum(getData(data_objects))
       .call(chart);
 
   nv.utils.windowResize(chart.update);
@@ -56,6 +59,22 @@ function randomData(groups, points) { //# groups,# points per group
   }
 
   return data;
+}
+
+function getData(data_json) {
+  var graphData = [];
+  var data = [];
+  var data_size = data_json.length;
+  for (var i = 0; i < data_size; ++i) {
+    data.push({
+      x: data_json[i]['x_data'],
+      y: data_json[i]['y_data'],
+      size: data_json[i]['radius_data'],
+      shape: 'circle'
+    });
+  }
+  graphData.push({values: data, key: 'Data'});
+  return graphData;
 }
 
 
