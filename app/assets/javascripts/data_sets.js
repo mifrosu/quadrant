@@ -69,7 +69,7 @@ function getData(data_json) {
     data.push({
       x: data_json[i]['x_data'],
       y: data_json[i]['y_data'],
-      size: data_json[i]['radius_data'],
+      size: data_json[i]['z_data'],
       shape: 'circle'
     });
   }

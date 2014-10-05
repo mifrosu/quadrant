@@ -12,11 +12,11 @@ class DataSet < ActiveRecord::Base
     self.clean_array!(row)
     DataSet.create!(title: title,
                     id_title: row[0], x_title: row[1],
-                    y_title: row[2], radius_title: row[3])
+                    y_title: row[2], z_title: row[3])
   end
 
   def chart_data
-    self.row_items.as_json(only: [:id_text, :x_data, :y_data, :radius_data])
+    self.row_items.as_json(only: [:id_text, :x_data, :y_data, :z_data])
   end
 
   private
@@ -25,7 +25,7 @@ class DataSet < ActiveRecord::Base
       rows.each do |row|
         self.clean_array!(row)
         data_set.row_items.create!(id_text: row[0], x_data: row[1],
-                                y_data: row[2], radius_data: row[3])
+                                y_data: row[2], z_data: row[3])
       end
       return true
   end

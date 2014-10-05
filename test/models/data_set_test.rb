@@ -17,7 +17,7 @@ class DataSetTest < ActiveSupport::TestCase
     assert_equal array.each { |e| e.strip! }, [data_set.id_title,
                                                data_set.x_title,
                                                data_set.y_title,
-                                               data_set.radius_title]
+                                               data_set.z_title]
   end
 
   test "A DataSet and its row items can be created by importing a CSV" do

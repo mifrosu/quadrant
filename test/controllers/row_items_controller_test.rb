@@ -18,7 +18,7 @@ class RowItemsControllerTest < ActionController::TestCase
 
   test "should create row_item" do
     assert_difference('RowItem.count') do
-      post :create, row_item: { data_set_id: @row_item.data_set_id, id_text: @row_item.id_text, radius_data: @row_item.radius_data, x_data: @row_item.x_data, y_data: @row_item.y_data }
+      post :create, row_item: { data_set_id: @row_item.data_set_id, id_text: @row_item.id_text, z_data: @row_item.z_data, x_data: @row_item.x_data, y_data: @row_item.y_data }
     end
 
     assert_redirected_to row_item_path(assigns(:row_item))
@@ -35,7 +35,7 @@ class RowItemsControllerTest < ActionController::TestCase
   end
 
   test "should update row_item" do
-    patch :update, id: @row_item, row_item: { data_set_id: @row_item.data_set_id, id_text: @row_item.id_text, radius_data: @row_item.radius_data, x_data: @row_item.x_data, y_data: @row_item.y_data }
+    patch :update, id: @row_item, row_item: { data_set_id: @row_item.data_set_id, id_text: @row_item.id_text, z_data: @row_item.z_data, x_data: @row_item.x_data, y_data: @row_item.y_data }
     assert_redirected_to row_item_path(assigns(:row_item))
   end
 

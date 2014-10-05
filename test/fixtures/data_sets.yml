@@ -5,11 +5,11 @@ one:
   id_title: MyString
   x_title: MyString
   y_title: MyString
-  radius_title: MyString
+  z_title: MyString
 
 two:
   title: MyString
   id_title: MyString
   x_title: MyString
   y_title: MyString
-  radius_title: MyString
+  z_title: MyString

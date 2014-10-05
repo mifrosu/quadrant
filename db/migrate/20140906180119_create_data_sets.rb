@@ -5,7 +5,7 @@ class CreateDataSets < ActiveRecord::Migration
       t.string :id_title
       t.string :x_title
       t.string :y_title
-      t.string :radius_title
+      t.string :z_title
 
       t.timestamps
     end

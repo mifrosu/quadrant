@@ -4,12 +4,12 @@ one:
   id_text: MyString
   x_data: 1.5
   y_data: 1.5
-  radius_data: 1.5
-  data_set_id: 
+  z_data: 1.5
+  data_set_id:
 
 two:
   id_text: MyString
   x_data: 1.5
   y_data: 1.5
-  radius_data: 1.5
-  data_set_id: 
+  z_data: 1.5
+  data_set_id:

@@ -69,6 +69,6 @@ class RowItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def row_item_params
-      params.require(:row_item).permit(:id_text, :x_data, :y_data, :radius_data, :data_set_id)
+      params.require(:row_item).permit(:id_text, :x_data, :y_data, :z_data, :data_set_id)
     end
 end

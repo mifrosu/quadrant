@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20140906181517) do
     t.string   "id_title"
     t.string   "x_title"
     t.string   "y_title"
-    t.string   "radius_title"
+    t.string   "z_title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140906181517) do
     t.string   "id_text"
     t.float    "x_data",      limit: 24
     t.float    "y_data",      limit: 24
-    t.float    "radius_data", limit: 24
+    t.float    "z_data",      limit: 24
     t.integer  "data_set_id"
     t.datetime "created_at"
     t.datetime "updated_at"
