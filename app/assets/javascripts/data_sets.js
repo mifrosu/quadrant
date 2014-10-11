@@ -2,40 +2,44 @@
 // All this logic will automatically be available in application.js.
 
 
-var ready = function() {
+var ready;
+ready = function() {
+
+  var chart;
+
+  if ($('#quadrant_data').length > 0) {
+
+    nv.addGraph(function() {
+      chart = nv.models.scatterChart()
+                    .showDistX(true)
+                    .showDistY(true)
+                    .useVoronoi(true)
+                    .color(d3.scale.category10().range())
+                    .transitionDuration(300)
+                    ;
+
+      chart.xAxis.tickFormat(d3.format('.02f'));
+      chart.yAxis.tickFormat(d3.format('.02f'));
+      //chart.tooltipContent(function(key) {
+      //    return '<h2>' + key + '</h2>';
+      //});
+
+      var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
+
+      d3.select('#quadrant_data svg')
+          //.datum(randomData(4,40))
+          .datum(getData(data_objects))
+          .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
+
+      return chart;
+    });
+  }
+
 };
-
-var chart;
-
-nv.addGraph(function() {
-  chart = nv.models.scatterChart()
-                .showDistX(true)
-                .showDistY(true)
-                .useVoronoi(true)
-                .color(d3.scale.category10().range())
-                .transitionDuration(300)
-                ;
-
-  chart.xAxis.tickFormat(d3.format('.02f'));
-  chart.yAxis.tickFormat(d3.format('.02f'));
-  //chart.tooltipContent(function(key) {
-  //    return '<h2>' + key + '</h2>';
-  //});
-
-  var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
-
-  d3.select('#quadrant_data svg')
-      //.datum(randomData(4,40))
-      .datum(getData(data_objects))
-      .call(chart);
-
-  nv.utils.windowResize(chart.update);
-
-  chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
-
-  return chart;
-});
-
 
 function randomData(groups, points) { //# groups,# points per group
   var data = [],
@@ -76,7 +80,6 @@ function getData(data_json) {
   graphData.push({values: data, key: 'Data'});
   return graphData;
 }
-
 
 $(document).ready(ready);
 $(document).on('page:load', ready);
