@@ -5,65 +5,105 @@
 var ready;
 ready = function() {
 
-  var chart;
-
   if ($('#quadrant_data').length > 0) {
 
-    nv.addGraph(function() {
-      chart = nv.models.scatterChart()
-                    .showDistX(true)
-                    .showDistY(true)
-                    .useVoronoi(true)
-                    .color(d3.scale.category10().range())
-                    .transitionDuration(300)
-                    ;
+    // get data as an array of objects
+    var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
 
-      chart.xAxis.tickFormat(d3.format('.02f'));
-      chart.yAxis.tickFormat(d3.format('.02f'));
-      //chart.tooltipContent(function(key) {
-      //    return '<h2>' + key + '</h2>';
-      //});
+    // define plot size
+    var w = 500;
+    var h = 300;
+    var padding = 40;
 
-      var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
+    // define scale
+    var x_min = d3.min(data_objects, function(d) { return d['x_data']; });
+    var x_max = d3.max(data_objects, function(d) { return d['x_data']; });
+    var y_min = d3.min(data_objects, function(d) { return d['y_data']; });
+    var y_max = d3.max(data_objects, function(d) { return d['y_data']; });
 
-      d3.select('#quadrant_data svg')
-          //.datum(randomData(4,40))
-          .datum(getData(data_objects))
-          .call(chart);
+    var xScale = d3.scale.linear()
+                   .domain([x_min, x_max])
+                   .range([padding, w - padding]);
+    var yScale = d3.scale.linear()
+                   .domain([y_min, y_max])
+                   .range([padding, h - padding]);
 
-      nv.utils.windowResize(chart.update);
+    // define axes
+    var xAxis = d3.svg.axis()
+                   .scale(xScale)
+                   .orient("bottom")
+                   .ticks(10);
 
-      chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
+    var yAxis = d3.svg.axis()
+                   .scale(yScale)
+                   .orient("left")
+                   .ticks(10);
 
-      return chart;
-    });
+    // create SVG element
+    var svg = d3.select('#quadrant_data')
+      .append('svg')
+      .attr('width', w)
+      .attr('height', h);
+
+    // append circles
+    svg.append('g')
+      .attr("id", "circles")
+      .selectAll('circle')
+      .data(data_objects)     // need this to return an array of hashes
+      .enter()
+      .append('circle')
+      .attr("cx", function(d) {
+        return xScale(d['x_data']);
+      })
+      .attr("cy", function(d) {
+        return yScale(d['y_data']);
+      })
+      .attr("r", function(d) {
+        return d['z_data'];
+      });
+
+    // create axes
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + (h - padding + 5) + ")")
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(" + (padding - 5) + ",0)")
+      .call(yAxis);
+
+    //nv.addGraph(function() {
+    //  chart = nv.models.scatterChart()
+    //                .showDistX(true)
+    //                .showDistY(true)
+    //                .useVoronoi(true)
+    //                .color(d3.scale.category10().range())
+    //                .transitionDuration(300)
+    //                ;
+
+    //  chart.xAxis.tickFormat(d3.format('.02f'));
+    //  chart.yAxis.tickFormat(d3.format('.02f'));
+    //  //chart.tooltipContent(function(key) {
+    //  //    return '<h2>' + key + '</h2>';
+    //  //});
+
+    //  var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
+
+    //  d3.select('#quadrant_data svg')
+    //      //.datum(randomData(4,40))
+    //      .datum(getData(data_objects))
+    //      .call(chart);
+
+    //  nv.utils.windowResize(chart.update);
+
+    //  chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
+
+    //  return chart;
+    //});
   }
 
 };
-
-function randomData(groups, points) { //# groups,# points per group
-  var data = [],
-      shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-      random = d3.random.normal();
-
-  for (i = 0; i < groups; i++) {
-    data.push({
-      key: 'Group ' + i,
-      values: []
-    });
-
-    for (j = 0; j < points; j++) {
-      data[i].values.push({
-        x: random(),
-        y: random(),
-        size: Math.random(),
-        shape: shapes[j % 6]
-      });
-    }
-  }
-
-  return data;
-}
 
 function getData(data_json) {
   var graphData = [];
