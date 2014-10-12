@@ -11,8 +11,8 @@ ready = function() {
     var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
 
     // define plot size
-    var w = 500;
-    var h = 300;
+    var w = 800;
+    var h = 500;
     var padding = 40;
 
     // define scale
@@ -20,14 +20,20 @@ ready = function() {
     var x_max = d3.max(data_objects, function(d) { return d['x_data']; });
     var y_min = d3.min(data_objects, function(d) { return d['y_data']; });
     var y_max = d3.max(data_objects, function(d) { return d['y_data']; });
+    var z_min = d3.min(data_objects, function(d) { return d['z_data']; });
+    var z_max = d3.max(data_objects, function(d) { return d['z_data']; });
 
     var xScale = d3.scale.linear()
                    .domain([x_min, x_max])
                    .range([padding, w - padding]);
+
     var yScale = d3.scale.linear()
                    .domain([y_min, y_max])
-                   .range([padding, h - padding]);
+                   .range([h - padding, padding]);
 
+    var zScale = d3.scale.linear()
+                   .domain([z_min, z_max])
+                   .range([h/200, h/20]);
     // define axes
     var xAxis = d3.svg.axis()
                    .scale(xScale)
@@ -59,8 +65,9 @@ ready = function() {
         return yScale(d['y_data']);
       })
       .attr("r", function(d) {
-        return d['z_data'];
-      });
+        return zScale(d['z_data']);
+      })
+      .attr("fill", "steelblue");
 
     // create axes
     svg.append("g")
