@@ -73,7 +73,8 @@ ready = function() {
       .attr("r", function(d) {
         return zScale(d['z_data']);
       })
-      .attr("fill", "steelblue");
+      .attr("fill", "steelblue")
+      .attr("stroke", "#192E40");
 
     // create axes
     svg.append("g")
