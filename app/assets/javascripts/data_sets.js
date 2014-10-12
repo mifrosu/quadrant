@@ -79,61 +79,24 @@ ready = function() {
     // create axes
     svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + (h - padding + 5) + ")")
+      .attr("transform", "translate(0," + yScale(0) + ")")
       .call(xAxis);
 
     svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate(" + (padding - 5) + ",0)")
+      .attr("transform", "translate(" + xScale(0) + ",0)")
       .call(yAxis);
 
-    //nv.addGraph(function() {
-    //  chart = nv.models.scatterChart()
-    //                .showDistX(true)
-    //                .showDistY(true)
-    //                .useVoronoi(true)
-    //                .color(d3.scale.category10().range())
-    //                .transitionDuration(300)
-    //                ;
-
-    //  chart.xAxis.tickFormat(d3.format('.02f'));
-    //  chart.yAxis.tickFormat(d3.format('.02f'));
-    //  //chart.tooltipContent(function(key) {
-    //  //    return '<h2>' + key + '</h2>';
-    //  //});
-
-    //  var data_objects = JSON.parse(d3.select('#quadrant_data').attr('data-items'));
-
-    //  d3.select('#quadrant_data svg')
-    //      //.datum(randomData(4,40))
-    //      .datum(getData(data_objects))
-    //      .call(chart);
-
-    //  nv.utils.windowResize(chart.update);
-
-    //  chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
-
-    //  return chart;
-    //});
+    // remove 0s from crossed axes
+    svg.selectAll(".tick")
+      .each(function (d, i) {
+        if (d == 0) {
+          this.remove();
+        }
+      });
   }
 
 };
-
-function getData(data_json) {
-  var graphData = [];
-  var data = [];
-  var data_size = data_json.length;
-  for (var i = 0; i < data_size; ++i) {
-    data.push({
-      x: data_json[i]['x_data'],
-      y: data_json[i]['y_data'],
-      size: data_json[i]['z_data'],
-      shape: 'circle'
-    });
-  }
-  graphData.push({values: data, key: 'Data'});
-  return graphData;
-}
 
 $(document).ready(ready);
 $(document).on('page:load', ready);
