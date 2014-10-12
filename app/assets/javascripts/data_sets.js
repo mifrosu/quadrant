@@ -23,12 +23,18 @@ ready = function() {
     var z_min = d3.min(data_objects, function(d) { return d['z_data']; });
     var z_max = d3.max(data_objects, function(d) { return d['z_data']; });
 
+    var diff_x = x_max - x_min;
+    var diff_y = y_max - y_min;
+
+    var x_pad = 0.05 * diff_x;
+    var y_pad = 0.05 * diff_y;
+
     var xScale = d3.scale.linear()
-                   .domain([x_min, x_max])
+                   .domain([x_min - x_pad, x_max + x_pad ])
                    .range([padding, w - padding]);
 
     var yScale = d3.scale.linear()
-                   .domain([y_min, y_max])
+                   .domain([y_min - y_pad, y_max + y_pad])
                    .range([h - padding, padding]);
 
     var zScale = d3.scale.linear()
