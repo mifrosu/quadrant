@@ -1,5 +1,9 @@
 <h1>Practice Data</h1>
 
+<select name="test" id ="month_selector">
+  <%= options_for_select(PracticeDatum.chart_data.map{ |e| [e["month"].to_s, e["month"]]}.uniq.sort, 2 ) %>
+</select>
+
 <%= content_tag(:div, "", id: "pie_practice_data", data: {items: PracticeDatum.chart_data }) %>
 
 <table>
