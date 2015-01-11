@@ -4,7 +4,7 @@ class PracticeDataController < ApplicationController
   # GET /practice_data
   # GET /practice_data.json
   def index
-    @practice_data = PracticeDatum.all
+    @practice_data = PracticeDatum.all.order(month: :asc, practice: :asc)
 
     respond_to do |format|
       format.html # index.html.erb

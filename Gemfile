@@ -37,5 +37,7 @@ gem 'spring',        group: :development
 
 group :development, :test do
   gem 'byebug', '~> 3.4.0'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 

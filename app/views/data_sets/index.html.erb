@@ -30,8 +30,12 @@
 
 <br>
 
-<h2>Import Data</h2>
+<h3>Import Data</h2>
 <%= form_tag import_data_sets_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "Upload CSV" %>
 <% end %>
+
+
+<h2>Other Projects</h2>
+<%= link_to 'Pie Charts', practice_data_path %>
