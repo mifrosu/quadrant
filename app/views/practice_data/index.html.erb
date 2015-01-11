@@ -1,0 +1,31 @@
+<h1>Listing practice_data</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Practice</th>
+      <th>Month</th>
+      <th>Count</th>
+      <th>Value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @practice_data.each do |practice_datum| %>
+      <tr>
+        <td><%= practice_datum.practice %></td>
+        <td><%= practice_datum.month %></td>
+        <td><%= practice_datum.count %></td>
+        <td><%= practice_datum.value %></td>
+        <td><%= link_to 'Show', practice_datum %></td>
+        <td><%= link_to 'Edit', edit_practice_datum_path(practice_datum) %></td>
+        <td><%= link_to 'Destroy', practice_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Practice datum', new_practice_datum_path %>

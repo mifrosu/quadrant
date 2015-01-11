@@ -1,0 +1,73 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+jan_one:
+  practice: "Alpha"
+  month: 1
+  count: 1
+  value: 4000
+
+jan_two:
+  practice: "Beta"
+  month: 1
+  count: 2
+  value: 1000
+
+jan_three:
+  practice: "Gamma"
+  month: 1
+  count: 3
+  value: 10000
+
+feb_one:
+  practice: "Alpha"
+  month: 2
+  count: 8
+  value: 3000
+
+feb_two:
+  practice: "Beta"
+  month: 2
+  count: 3
+  value: 3000
+
+feb_three:
+  practice: "Gamma"
+  month: 2
+  count: 1
+  value: 1000
+
+feb_four:
+  practice: "Delta"
+  month: 2
+  count: 4
+  value: 12000
+
+mar_one:
+  practice: "Alpha"
+  month: 3
+  count: 8
+  value: 6000
+
+mar_two:
+  practice: "Beta"
+  month: 3
+  count: 3
+  value: 3000
+
+mar_three:
+  practice: "Gamma"
+  month: 3
+  count: 1
+  value: 5000
+
+mar_four:
+  practice: "Delta"
+  month: 3
+  count: 2
+  value: 2000
+
+mar_four:
+  practice: "Epsilon"
+  month: 3
+  count: 7
+  value: 7000

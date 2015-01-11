@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Practice:</strong>
+  <%= @practice_datum.practice %>
+</p>
+
+<p>
+  <strong>Month:</strong>
+  <%= @practice_datum.month %>
+</p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @practice_datum.count %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @practice_datum.value %>
+</p>
+
+<%= link_to 'Edit', edit_practice_datum_path(@practice_datum) %> |
+<%= link_to 'Back', practice_data_path %>

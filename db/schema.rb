@@ -11,24 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906181517) do
+ActiveRecord::Schema.define(version: 20150111085105) do
 
-  create_table "data_sets", force: true do |t|
-    t.string   "title"
-    t.string   "id_title"
-    t.string   "x_title"
-    t.string   "y_title"
-    t.string   "z_title"
+  create_table "data_sets", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.string   "id_title",   limit: 255
+    t.string   "x_title",    limit: 255
+    t.string   "y_title",    limit: 255
+    t.string   "z_title",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "row_items", force: true do |t|
-    t.string   "id_text"
+  create_table "practice_data", force: :cascade do |t|
+    t.string   "practice",   limit: 255
+    t.integer  "month",      limit: 4
+    t.integer  "count",      limit: 4
+    t.integer  "value",      limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "row_items", force: :cascade do |t|
+    t.string   "id_text",     limit: 255
     t.float    "x_data",      limit: 24
     t.float    "y_data",      limit: 24
     t.float    "z_data",      limit: 24
-    t.integer  "data_set_id"
+    t.integer  "data_set_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

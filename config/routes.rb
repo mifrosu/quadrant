@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :practice_data
+
   root "data_sets#index"
 
   resources :data_sets do

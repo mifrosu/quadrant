@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.5'
-gem 'active_model_serializers'
+gem 'rails', '4.2'
+gem 'active_model_serializers', '0.9.1'
 gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
