@@ -2,7 +2,7 @@
 // All this logic will automatically be available in application.js.
 
 var MOSPie = {
-  makePie: function (svg_object, arc_object, color_scale, color_key, pie_data, trans_x, trans_y) {
+  makePie: function (svg_object, arc_object, color_scale, color_key, pie_data, trans_x, trans_y, tip_key) {
     svg_object.append("g")
       .attr("transform", "translate(" + trans_x + "," + trans_y + ")")
       .selectAll("path")
@@ -15,7 +15,11 @@ var MOSPie = {
         })
       .style("opacity", .75)
       .style("stroke", "white")
-      .style("stroke-width", "2px");
+      .style("stroke-width", "2px")
+      .append("svg:title")
+      .text(function (d) {
+        return d.data[color_key] + "\n" + tip_key + ": " + d.data[tip_key];
+      });
   },
   getPieData: function (pie_object, data_hash, selector) {
     return pie_object(data_hash[selector].values);
@@ -130,8 +134,8 @@ ready = function() {
     var all_keys = $('#key-array').data("items");
     var color_scale = MOSPie.makeColorScale(all_keys);
 
-    MOSPie.makePie(svg, arc, color_scale, "practice", count_data, 150, 150);
-    MOSPie.makePie(svg, arc, color_scale, "practice", value_data, 450, 150);
+    MOSPie.makePie(svg, arc, color_scale, "practice", count_data, 150, 150, "count");
+    MOSPie.makePie(svg, arc, color_scale, "practice", value_data, 450, 150, "value");
     MOSPie.makeStandardLegend();
     MOSPie.activateLegend(count_data, color_scale, "practice");
 
@@ -140,14 +144,13 @@ ready = function() {
       var count_data = MOSPie.getPieData(pie_count_chart, data_by_month, month);
       var value_data = MOSPie.getPieData(pie_value_chart, data_by_month, month);
       svg.selectAll("path").remove();
-      MOSPie.makePie(svg, arc, color_scale, "practice", count_data, 150, 150);
-      MOSPie.makePie(svg, arc, color_scale, "practice", value_data, 450, 150);
+      MOSPie.makePie(svg, arc, color_scale, "practice", count_data, 150, 150, "count");
+      MOSPie.makePie(svg, arc, color_scale, "practice", value_data, 450, 150, "value");
       MOSPie.clearLegend();
       MOSPie.makeStandardLegend();
       MOSPie.activateLegend(count_data, color_scale, "practice");
     });
   }
-
 };
 
 
