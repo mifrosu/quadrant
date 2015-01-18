@@ -2,7 +2,7 @@
 // All this logic will automatically be available in application.js.
 
 var MOSPie = {
-  makePie: function (svg_object, arc_object, pie_data, trans_x, trans_y) {
+  makePie: function (svg_object, arc_object, color_scale, color_key, pie_data, trans_x, trans_y) {
     svg_object.append("g")
       .attr("transform", "translate(" + trans_x + "," + trans_y + ")")
       .selectAll("path")
@@ -10,13 +10,60 @@ var MOSPie = {
       .enter()
       .append("path")
       .attr("d", arc_object)
-      .style("fill", "blue")
-      .style("opacity", .5)
-      .style("stroke", "black")
+      .style("fill", function(d) {
+        return color_scale[d.data[color_key]];
+        })
+      .style("opacity", .75)
+      .style("stroke", "white")
       .style("stroke-width", "2px");
   },
   getPieData: function (pie_object, data_hash, selector) {
     return pie_object(data_hash[selector].values);
+  },
+  makeColorScale: function(key_array) {
+    // helper to return colour based on ID
+    var color_scale = d3.scale.category20()
+    var color_keys = {};
+    key_array.forEach(function (e) {
+      color_keys[e] = color_scale(e);
+    });
+    return color_keys;
+  },
+  makeStandardLegend: function() {
+    var all_keys = $('#key-array').data("items");
+    var legend = d3.select('#legend')
+      .append('ul')
+      .attr('class', 'legend-list');
+
+    legend.selectAll("li")
+      .data(all_keys)
+      .enter()
+      .append('li')
+      .attr('class', 'key-item')
+      .attr('id', function (d) {
+        return "key-" + MOSPie.keyClassify(d);
+      })
+      .text(function(d) {
+        return d;
+      });
+  },
+  activateLegend: function (pie_data, color_scale, label_key) {
+    var active_keys =  pie_data.map(function (item) {
+      return item.data[label_key];
+    });
+    active_keys.forEach(function (e) {
+      d3.select("li#key-" + MOSPie.keyClassify(e))
+        .style("color", "black")
+        .style("border-left-color", function (e) {
+          return color_scale[e];
+        });
+    });
+  },
+  clearLegend: function () {
+    d3.selectAll("ul.legend-list").remove();
+  },
+  keyClassify: function (str) {
+    return str.replace(/\W+/g, '-').toLowerCase();
   }
 };
 
@@ -56,7 +103,6 @@ ready = function() {
     // declare pie charts
     var pie_count_chart = d3.layout.pie();
     pie_count_chart.value(function(d) {
-      console.log(d);
       return d.count;
     });
 
@@ -66,16 +112,14 @@ ready = function() {
     });
 
     var month = d3.select("#month_selector").node().value;
-    //d3.select("#month_selector").change(function(){
-    //  alert($(this).find('option:selected').attr('rel'));
-    //});
 
-    //var count_data = pie_count_chart(data_by_month[month].values);
-    //var value_data = pie_value_chart(data_by_month[month].values);
     var count_data = MOSPie.getPieData(pie_count_chart, data_by_month, month);
     var value_data = MOSPie.getPieData(pie_value_chart, data_by_month, month);
-    var new_arc = d3.svg.arc();
-    new_arc.outerRadius(100);
+
+    // create the path tags for arcs
+    var arc = d3.svg.arc();
+    arc.outerRadius(100);
+
 
     // create the SVG element
     var svg = d3.select('#pie_practice_data')
@@ -83,30 +127,24 @@ ready = function() {
       .attr('width', w)
       .attr('height', h);
 
-    MOSPie.makePie(svg, new_arc, count_data, 150, 150);
-    MOSPie.makePie(svg, new_arc, value_data, 450, 150);
-    //svg.append("g")
-    //  .attr("transform", "translate(150,150)")
-    //  .selectAll("path")
-    //  .data(count_data)
-    //  .enter()
-    //  .append("path")
-    //  .attr("d", new_arc)
-    //  .style("fill", "blue")
-    //  .style("opacity", .5)
-    //  .style("stroke", "black")
-    //  .style("stroke-width", "2px");
+    var all_keys = $('#key-array').data("items");
+    var color_scale = MOSPie.makeColorScale(all_keys);
 
-    console.log(data_by_month);
-    console.log(count_data);
+    MOSPie.makePie(svg, arc, color_scale, "practice", count_data, 150, 150);
+    MOSPie.makePie(svg, arc, color_scale, "practice", value_data, 450, 150);
+    MOSPie.makeStandardLegend();
+    MOSPie.activateLegend(count_data, color_scale, "practice");
 
     $("#month_selector").change(function() {
       var month = $(this).find('option:selected').attr('value');
       var count_data = MOSPie.getPieData(pie_count_chart, data_by_month, month);
       var value_data = MOSPie.getPieData(pie_value_chart, data_by_month, month);
       svg.selectAll("path").remove();
-      MOSPie.makePie(svg, new_arc, count_data, 150, 150);
-      MOSPie.makePie(svg, new_arc, value_data, 450, 150);
+      MOSPie.makePie(svg, arc, color_scale, "practice", count_data, 150, 150);
+      MOSPie.makePie(svg, arc, color_scale, "practice", value_data, 450, 150);
+      MOSPie.clearLegend();
+      MOSPie.makeStandardLegend();
+      MOSPie.activateLegend(count_data, color_scale, "practice");
     });
   }
 

@@ -4,7 +4,10 @@
   <%= options_for_select(PracticeDatum.chart_data.map{ |e| [e["month"].to_s, e["month"]]}.uniq.sort, 2 ) %>
 </select>
 
+<%= content_tag(:div, "", id: "key-array", data: {items: @practice_data.map(&:practice).uniq.sort }) %>
 <%= content_tag(:div, "", id: "pie_practice_data", data: {items: PracticeDatum.chart_data }) %>
+
+<div id="legend" class="legend-container"> </div>
 
 <table>
   <thead>
